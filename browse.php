@@ -9,25 +9,99 @@
         <div class="mainWrapper">
             <?php
             include_once "php/menu.php";
+            include_once "config.php";
             ?>
             <div class="mainBody">
+
+
+
                 <div class="content big">
-                    <form action="post">
-                        <input type="text">
-                        <input type="text">
-                        <input type="submit" name="search" value="search">
+                    <form method="GET">
+                        <INPUT type="text" name="searchQuerry" placeholder="Title or Author">
+                        <INPUT type="submit" name="submit" value="Submit">
                     </form>
                 </div>
                 <?php
-                include_once ("php/booklist.php");
-                foreach ($books as $book){
-                    $title = $book['title'];
-                    $author = $book['author'];
-                    print'
+//                include_once "php/booklist.php";
+
+//                $query = " SELECT * from books";
+//                var_dump($query);
+//                $stmt = $db->prepare($query);
+//                $stmt->execute();
+//                $books = $stmt->fetch();
+
+                $sql = " SELECT * from books";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute();
+                $books= $stmt->fetchAll();
+
+
+                //                Starting with this search method
+                if (isset($_GET) && !empty($_GET)) {
+                    # Get data from form
+
+                    #first trim the search, so no white spaces appear prior to the text entered
+                    $searchQuerry = trim($_GET['searchQuerry']);
+
+                    #after that it is wise to use addslashes, it adds slashes if there's an apostrophe or quotation mark
+                    $searchQuerry = addslashes($searchQuerry);
+
+                    var_dump($searchQuerry);
+
+                    #here we create a variable $id and basically say that we want the data from the array matching the search criteria
+                    $id = array_search($searchQuerry, array_column($books, 'title'));
+                    $id2 = array_search($searchQuerry, array_column($books, 'author'));
+
+                    $sql = " SELECT * from books";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
+                    $books= $stmt->fetchAll();
+
+
+                    #now we check if we have the ID or not in our array. If the search was a hit, it will assign something to our DB, if not, then it will not work.
+                    if ($id !== FALSE) {
+                        $book = $books[$id];
+                        $title = $book['title'];
+                        $author = $book['author'];
+                        print'
                 <div class="content big">
-                    <img src="images/book.png" alt="cover"> <span>Title:'.$title.'. Author:'.$author.'.</span>
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
+                    <a href="reserve.php?reservation=' .  urlencode($title) . '"> Reserve </a>
                 </div>
                 ';
+                    }
+                    if ($id2 !== FALSE) {
+                        $book = $books[$id2];
+                        $title = $book['title'];
+                        $author = $book['author'];
+                        print'
+                <div class="content big">
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
+                    <a href="reserve.php?reservation=' .  urlencode($title) . '"> Reserve </a>
+                </div>
+                ';
+                    }
+                    if ($id == FALSE && $id2 == FALSE){
+                        print'There were no books matching your search!';
+                    }
+                }
+
+
+
+//                Else do this, which just lists all books
+
+                else {
+
+                    foreach ($books as $book) {
+                        $title = $book['title'];
+                        $author = $book['author'];
+                        print'
+                <div class="content big">
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
+                    <a href="reserve.php?reservation=' .  urlencode($title) . '"> Reserve </a>
+                </div>
+                ';
+                    }
                 }
                 ?>
             </div>

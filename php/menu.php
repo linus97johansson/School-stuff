@@ -1,6 +1,8 @@
 <?php
 $current = basename($_SERVER['REQUEST_URI']);
-var_dump($current);
+$current = explode('?', $current);
+$current = $current['0'];
+//var_dump($current);
 ?>
 <div class="menuImage">
     <ul class="mainMeny">

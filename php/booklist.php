@@ -1,11 +1,12 @@
 <?php
 
 $books = array();
-$books[] = array("title" => "Wordpress for you", "author" => "Johan Kohlin");
-$books[] = array("title" => "PHP the easy way", "author" => "John Bauer");
-$books[] = array("title" => "The big bad wolf", "author" => "R. K. Rowling");
-$books[] = array("title" => "No Idea", "author" => "Nolan Ideos");
+$books[] = array("id" => "1", "title" => "Wordpress for you", "author" => "Johan Kohlin");
+$books[] = array("id" => "2","title" => "PHP the easy way", "author" => "John Bauer");
+$books[] = array("id" => "3","title" => "The big bad wolf", "author" => "R. K. Rowling");
+$books[] = array("id" => "4","title" => "No Idea", "author" => "Nolan Ideos");
 
+echo 'books loaded';
 //var_dump($books);
 /**
  * Created by PhpStorm.

@@ -12,7 +12,7 @@
       <paths name="school-stuff">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/school-stuff" />
+            <mapping local="C:/xampp/htdocs/SchoolProject1" web="" />
           </mappings>
         </serverdata>
       </paths>
