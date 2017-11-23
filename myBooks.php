@@ -1,38 +1,39 @@
 <?php
-if(!isset($_COOKIE["accepted"])) {
-    $cookie_value = "No";
-    setcookie("accepted", $cookie_value, time() + (86400 * 30), "/");
-};
+include_once "config.php";
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/main.css"/>
-        <title></title>
-    </head>
-    <body>
-        <div class="mainWrapper">
-            <?php
-            if($_COOKIE["accepted"] == "No"){
-                print'
-                <div class="cookieAlert">This site uses cookies!  By your continued use of this site you accept out "terms of use"</div>
-                ';
-
-            }
-            include_once "php/menu.php";
-            ?>
-            <div class="mainBody">
-                <div class="content big">
-                    <img src="images/book.png" alt="book"> <input type="button" name="return" value="return">
-                </div>
-                <div class="content big">
-                    <img src="images/book.png" alt="book"> <input type="button" name="return" value="return">
-                </div>
-            </div>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/main.css"/>
+    <title>My books</title>
+</head>
+<body>
+<div class="mainWrapper">
     <?php
-    include_once ("php/footer.php");
+    include_once "php/menu.php";
     ?>
-    </body>
+    <div class="mainBody">
+        <?php
+        $sql = " SELECT * from books WHERE `reserved`='1'";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $books = $stmt->fetchAll();
+
+        foreach ($books as $book) {
+            $id = $book['bookid'];
+            $title = $book['title'];
+            $author = $book['author'];
+            print'<div class="content big">
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
+                    <a href="returnBook.php?bookid=' . urlencode($title) . '"> Return </a>
+                </div>';
+        }
+        ?>
+    </div>
+</div>
+<?php
+include_once("php/footer.php");
+?>
+</body>
 </html>
