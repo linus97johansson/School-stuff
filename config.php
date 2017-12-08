@@ -17,14 +17,29 @@ $current_page = end($strings);
 //@ $db = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
 
 //Konstanter för anslutningen
-define("DB_SERVER", "localhost");
+define("DB_SERVER", "127.0.0.1");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
 define("DB_NAME", "library");
 
 // Användning av konstanter
 
-$dsn = 'mysql:dbname=' . DB_NAME . ';host=' . DB_SERVER . ';charset=utf8';
+
+
+//$user = "root";
+//$pass = "";
+//
+//try {
+//    $dbh = new PDO('mysql:host=127.0.0.1:3306;dbname=library', $user, $pass);
+//    var_dump($dbh);
+//} catch (PDOException $e) {
+//    print "Error!: " . $e->getMessage() . "<br/>";
+//    die();
+//}
+//
+
+
+$dsn = 'mysql:host=localhost;dbname=library';
 
 //Inställningar
 
@@ -32,7 +47,6 @@ $attributes = array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 );
-
 $dbh = new PDO($dsn, DB_USER, DB_PASSWORD, $attributes);
 
 # Tell the user if it can’t connect
@@ -40,7 +54,7 @@ $dbh = new PDO($dsn, DB_USER, DB_PASSWORD, $attributes);
 //    echo "could not connect: " . $db->connect_error;
 //    printf("<br><a href=index.php>Return to home page </a>");
 //    exit();
-//}
+
 
 
 #the following three will get you the current page, how?

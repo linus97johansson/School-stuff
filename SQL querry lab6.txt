@@ -1,0 +1,1 @@
+SELECT * FROM `books` JOIN connections ON connections.bookID = books.bookid JOIN authors ON connections.authorID = authors.id

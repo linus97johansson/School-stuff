@@ -22,6 +22,9 @@ $current = $current['0'];
         <a href="contact.php">
             <li class="menuItem <?php if ($current == "contact.php"){print "active";}?>">Contact</li>
         </a>
+        <a href="galery.php">
+            <li class="menuItem <?php if ($current == "galery.php"){print "active";}?>">Galery</li>
+        </a>
     </ul>
 </div>
 
