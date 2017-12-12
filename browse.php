@@ -70,10 +70,14 @@
                             $author = $book['author'];
                             print'
                 <div class="content big">
-                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
-                    <a href="reserve.php?reservation=' . urlencode($title) . '"> Reserve </a>
-                </div>
-                ';
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>';
+
+                    if ($book['reserved']==0){
+                        print'<a href="reserveBook.php?bookid=' . urlencode($title) . '"> Reserve </a>';
+                    }else{
+                        print'Reserved';
+                    }
+                    print'</div>';
                         }
                     }
                     if ($books == FALSE){
@@ -89,13 +93,17 @@
 
                     foreach ($books as $book) {
                         $title = $book['title'];
+                        $id = $book['bookid'];
                         $author = $book['author'];
                         print'
                 <div class="content big">
-                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
-                    <a href="reserve.php?reservation=' .  urlencode($title) . '"> Reserve </a>
-                </div>
-                ';
+                    <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>';
+                        if ($book['reserved']==0){
+                            print'<a href="reserveBook.php?bookid=' . urlencode($title) . '"> Reserve </a>';
+                        }else{
+                            print'Reserved';
+                        }
+                        print'</div>';
                     }
                 }
                 ?>

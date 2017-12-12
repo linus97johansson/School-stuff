@@ -38,7 +38,15 @@ This is the form to upload a picture in the gallery
         </div>";
 
         if (isset($_POST['addBook'])) {
-            $sql = "INSERT INTO `books`(`title`, `author`) VALUES ('" . $_POST['Title'] . "','" . $_POST['Author'] . "')";
+            $title = $_POST['Title'];
+            $title = htmlentities($title);
+            $title = htmlspecialchars($title);
+
+            $author = $_POST['Author'];
+            $author = htmlentities($author);
+            $author = htmlspecialchars($author);
+
+            $sql = "INSERT INTO `books`(`title`, `author`) VALUES ('" . $title . "','" . $author . "')";
             $stmt = $dbh->prepare($sql);
             $stmt->execute();
             unset($_POST);
@@ -99,9 +107,14 @@ This is the form to upload a picture in the gallery
         if (isset($_POST) && !empty($_POST)) {
             $usernameInput = $_POST["username"];
             $usernameInput = htmlentities($usernameInput);
+            $usernameInput = filter_var($usernameInput, FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $usernameInput = htmlspecialchars($usernameInput);
 
             $passwordInput = sha1($_POST["password"]);
             $passwordInput = htmlentities($passwordInput);
+            $passwordInput = filter_var($passwordInput,FILTER_SANITIZE_SPECIAL_CHARS);
+            $passwordInput = htmlspecialchars($passwordInput);
 
             $sql = " SELECT * FROM `Admins` WHERE `username`='" . $usernameInput . "' AND `password`='" . $passwordInput . "'";
             $stmt = $dbh->prepare($sql);

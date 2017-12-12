@@ -1,4 +1,3 @@
-
 <?php
 
 include("config.php");
@@ -11,23 +10,23 @@ $bookid = addslashes($bookid);
 
 @ $db = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
 
-    if ($db->connect_error) {
-        echo "could not connect: " . $db->connect_error;
-        printf("<br><a href=index.php>Return to home page </a>");
-        exit();
-    }
-    
-   echo $bookid;
-
-    // Prepare an update statement and execute it
-    $stmt = $db->prepare("UPDATE books SET onloan=0 WHERE bookid = ?");
-    $stmt->bind_param('i', $bookid);
-    $stmt->execute();
-    printf("<br>Succesfully returned!");
-    printf("<br><a href=listBooks.php>Search and Book more Books </a>");
-    printf("<br><a href=reservedBooks.php>Return to Reserved Books </a>");
+if ($db->connect_error) {
+    echo "could not connect: " . $db->connect_error;
     printf("<br><a href=index.php>Return to home page </a>");
-    exit;
+    exit();
+}
+
+echo $bookid;
+
+// Prepare an update statement and execute it
+$sql = "UPDATE books SET reserved=0 WHERE bookid = " . $bookid;
+var_dump($sql);
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+printf("<br>Succesfully returned!");
+print"You should be redirected to the front page. If not, press <a href='index.php'>Here</a>.";
+header("location:index.php");
+exit;
 
 ?>
 

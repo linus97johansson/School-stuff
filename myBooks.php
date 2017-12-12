@@ -26,7 +26,7 @@ include_once "config.php";
             $author = $book['author'];
             print'<div class="content big">
                     <img src="images/book.png" alt="cover"> <span>Title:' . $title . '. Author:' . $author . '.</span>
-                    <a href="returnBook.php?bookid=' . urlencode($title) . '"> Return </a>
+                    <a href="returnBook.php?bookid=' . urlencode($id) . '"> Return </a>
                 </div>';
         }
         ?>
